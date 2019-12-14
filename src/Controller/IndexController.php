@@ -104,17 +104,20 @@ class IndexController extends AbstractController
         $ogTitle = $title;
         $ogDescription = $description;
         $ogImage = "https://carteloncuba.com/assets/images/hero/Grafica-08.jpg";
+        $dim = [1366,768];
 
         if ($poster != null) {
             $ogTitle = $poster->getAssociateEvent()->getName().'-'.$poster->getAuthor();
             $ogDescription = $poster->getDescription();
             $ogImage = $poster->getWebPath(null);
+            $dim = $poster->getOriginalSizes();
         }
 
         if ($new != null) {
             $ogTitle = $new->getTitle();
             $ogDescription = $new->getText();
             $ogImage = $new->getWebPath(null);
+            $dim = $new->getOriginalSizes();
         }
 
         return $this->render('index/index.html.twig', [
@@ -123,6 +126,7 @@ class IndexController extends AbstractController
             'ogTitle' => $ogTitle,
             'ogDescription' => $ogDescription,
             'ogImage' => $ogImage,
+            'dim'=>$dim,
             'projectInfo' => $projectInfo,
             'slides' => $slides,
             'news' => $news,

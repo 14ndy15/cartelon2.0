@@ -120,6 +120,10 @@ abstract class ImageField
         return $width;
     }
 
+    public function getOriginalSizes(){
+        return getimagesize($this->getAbsolutePath());
+    }
+
     protected function getUploadRootDir()
     {
         // la ruta absoluta del directorio donde se deben
