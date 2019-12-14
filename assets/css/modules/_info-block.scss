@@ -47,6 +47,19 @@
             text-align: center;
         }
 
+        &__share{
+            display: flex;
+
+            & a {
+                color: white;
+
+                & img {
+                    width: 1em;
+                    display: inline;
+                }
+            }
+        }
+
         &__text{
             color: #fff;
             margin: 10px 0;

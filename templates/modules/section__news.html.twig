@@ -31,7 +31,8 @@
 
                         <div class="row__large-6 news__text">
                                 <div class="info-block__description">
-                                    <a href="{{ url('show_news', {'new': new.id, 'title': new.title | url_encode }) }}#{{ new.title | url_encode }}">
+                                    {% set url = url('show_news', {'new': new.id, 'title': new.title | url_encode }) %}
+                                    <a href="{{ url }}#{{ new.title | url_encode }}">
                                         <h3 class="info-block__description__title">
                                             {{ new.title }}
                                         </h3>
@@ -39,6 +40,15 @@
                                     <h4 class="info-block__description__subtitle">
                                         {{ new.dateFormated}}
                                     </h4>
+                                    <div class="info-block__description__share">
+                                        {% set absolute_url = absolute_url(url) %}
+                                        {% set facebook_url = 'https://www.facebook.com/sharer/sharer.php?u='~absolute_url~'#'~(new.title | url_encode)~';src=sdkpreparse' %}
+                                        <a target="_blank" href="{{ facebook_url }}" class="fb-xfbml-parse-ignore">
+                                            <img src="{{ asset('images/icons/facebook_blue.svg') }}" alt="facebook logo">
+                                            Compartir en Facebook
+                                        </a>
+                                    </div>
+
                                     <p class="info-block__description__text">
                                         {{ new.text }}
                                     </p>
