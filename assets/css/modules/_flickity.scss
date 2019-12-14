@@ -1,0 +1,61 @@
+@import "~flickity";
+
+.carousel{
+
+    &__cell {
+        width: 100%;
+        height: 100vh;
+        margin-right: 10px;
+      }
+      
+}
+
+
+.flickity-page-dots {
+    bottom: 2rem;
+    
+    .dot{
+        width: 0.8em;
+        height: 0.8em;
+        opacity: .5;
+        background: #fff;
+    }
+
+}
+
+
+.flickity-prev-next-button{
+    background-color: #fff;
+    width: 44px;
+    height: 44px;
+
+    @include atSmall {
+        width: 55px;
+        height: 55px;
+    }
+
+    &.previous{
+        left: 0;
+        transform: translateX(-50%);
+    }
+
+    &.next{
+        right: 0;
+        transform: translateX(50%);
+    }
+
+    & .flickity-button-icon {
+        
+        left: 25%;
+        top: 25%;
+        width: 44%;
+        height: 44%;
+
+        @include atSmall {
+            width: 50%;
+            height: 50%;
+        }
+
+        fill: $mainDark;
+    }
+}

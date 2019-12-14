@@ -1,0 +1,70 @@
+<section class="section" id="news" data-nav-link="#news-link" data-nav-link-prev="#us-link">
+    <div class="wrapper">
+        <h2 class="section__title">Noticias</h2>
+        <div id="news-container" class="section__container">
+
+            {{ include('modules/prototypes/_new.html.twig') }}
+
+            {% for new in news %}
+                <div class="info-block">
+                    {% if loop.index0 % 2 == 0 %}
+                        {% set class = '' %}
+                    {% else %}
+                        {% set class = 'news--inverse' %}
+                    {% endif %}
+
+                    <div id="{{ new.title | url_encode }}" class="row row--equal-height row--gutters-bottom news {{ class }}">
+                        <div class="row__large-6 news__image">
+                            <img class="lazyload blur-up"
+                                 src="{{ asset(new.getWebPath(20)) }}"
+                                 sizes="(max-width: 1300px) 100vw, 50vw"
+                                 data-srcset="
+                                    {% for dimension in new.getConstraintWideDimensions %}
+                                        {% if not loop.last %}
+                                            {{ asset(new.webPath(dimension)) }} {{ dimension }}w,
+                                        {% else %}
+                                            {{ asset(new.webPath(dimension)) }} {{ dimension }}w
+                                        {% endif %}
+                                    {% endfor %}"
+                                 alt="{{ new.title }}">
+                        </div>
+
+                        <div class="row__large-6 news__text">
+                                <div class="info-block__description">
+                                    <a href="{{ url('show_news', {'new': new.id, 'title': new.title | url_encode }) }}#{{ new.title | url_encode }}">
+                                        <h3 class="info-block__description__title">
+                                            {{ new.title }}
+                                        </h3>
+                                    </a>
+                                    <h4 class="info-block__description__subtitle">
+                                        {{ new.dateFormated}}
+                                    </h4>
+                                    <p class="info-block__description__text">
+                                        {{ new.text }}
+                                    </p>
+                                    {% if new.getFileWebPath %}
+                                        <div class="wrapper--center-text">
+                                            <a class="btn btn--blue" href="{{ new.getFileWebPath }}">Descargar bases</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        {% if moreNews %}
+            <div id="news__load__wrapper" class="load__animation__wrapper">
+                <div class="load__animation__wrapper__element"></div>
+            </div>
+
+            <div id="wrapper-loadMoreNews" class="wrapper--center-text">
+                <button id="loadMoreNews" class="btn btn--blue-inverse">Ver más noticias</button>
+            </div>
+        {% endif %}
+
+    </div>
+
+</section>

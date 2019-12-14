@@ -1,0 +1,23 @@
+.news{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    &__image{
+        order: 1;
+    }
+
+    &__text{
+        order: 2;
+    }
+
+    &--inverse{
+        .news__image{
+            order: 2;
+        }
+
+        .news__text{
+            order: 1;
+        }
+    }
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="UTF-8">
+
+        <title>{{ title }}</title>
+        <meta name="description" content="{{ description }}">
+
+        <meta property="og:locale" content="es_ES" />
+        <meta property="og:title" content="{{ ogTitle }}" />
+        <meta property="og:description" content="{{ ogDescription }}" />
+        <meta property="og:image" content="{{ absolute_url(asset(ogImage)) }}" />
+
+        {# Color chrome tab #}
+        <meta name="theme-color" content="#0099cc">
+
+        <link rel="icon" href="favicon.svg">
+
+        {% block preload %}{% endblock %}
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts_header %}{% endblock %}
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-127067962-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-127067962-1');
+        </script>
+
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v5.0"></script>
+
+    </head>
+    <body style="overflow-x: hidden">
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
