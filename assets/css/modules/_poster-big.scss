@@ -125,10 +125,10 @@
         }
 
         &__share{
-            margin: 0 1em;
-
+            display: flex;
             & img{
-                width: 2.5em;
+                display: inline;
+                width: 1em;
                 border: 0;
             }
         }
