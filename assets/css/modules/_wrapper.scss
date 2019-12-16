@@ -24,6 +24,11 @@
     }
 
     @include atSmall {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    @include atLarge{
         margin-left: 65px;
         margin-right: 65px;
     }

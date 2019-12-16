@@ -13,11 +13,17 @@
 
     &--inverse{
         .news__image{
-            order: 2;
+
+            @include atLarge {
+                order: 2;
+            }
         }
 
         .news__text{
-            order: 1;
+
+            @include atLarge {
+                order: 1;
+            }
         }
     }
 }

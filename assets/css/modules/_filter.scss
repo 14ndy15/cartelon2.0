@@ -19,6 +19,11 @@
         padding: 1em;
         margin: auto;
         flex-flow: wrap;
+
+        @include atMedium{
+            flex-wrap: nowrap;
+        }
+
     }
 
     &__text{        

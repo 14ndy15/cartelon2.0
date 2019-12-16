@@ -67,10 +67,10 @@
                         {% endfor %}
                     </div>
 
-                    <div class="wrapper">
-                        <h3 class="event__expand__title">{{ eventFirst.name }}</h3>
-                        <h4 class="event__expand__subtitle">{{ eventFirst.getDateFormated }}, {{ eventFirst.place }}</h4>
-                        <p class="event__expand__text">
+                    <div class="event__expand__content">
+                        <h3 class="event__expand__content__title">{{ eventFirst.name }}</h3>
+                        <h4 class="event__expand__content__subtitle">{{ eventFirst.getDateFormated }}, {{ eventFirst.place }}</h4>
+                        <p class="event__expand__content__text">
                             {{ eventFirst.description | nl2br }}
                         </p>
                         <a data-collapse="true" href="#event_0">
@@ -147,10 +147,10 @@
 
                             </div>
 
-                            <div class="wrapper">
-                                <h3 class="event__expand__title">{{ event.name }}</h3>
-                                <h4 class="event__expand__subtitle">{{ event.datetime | date('Y') }}, {{ event.place }}</h4>
-                                <p class="event__expand__text">
+                            <div class="event__expand__content">
+                                <h3 class="event__expand__content__title">{{ event.name }}</h3>
+                                <h4 class="event__expand__content__subtitle">{{ event.datetime | date('Y') }}, {{ event.place }}</h4>
+                                <p class="event__expand__content__text">
                                     {{ event.description | nl2br }}
                                 </p>
                                 <a data-collapse="true" href="#event_{{ index }}">

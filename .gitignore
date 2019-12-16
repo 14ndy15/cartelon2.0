@@ -16,9 +16,11 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-/public/build/
 npm-debug.log
 yarn-error.log
 /public/uploads
 /public/images
+.env
+.env.test
+.idea/
 ###< symfony/webpack-encore-bundle ###
