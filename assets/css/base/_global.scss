@@ -332,11 +332,9 @@ img{
 
 p{
     color: $mainGrey;
-
-    @mixin atSmall {
-        line-height: 1.8rem;
-        font-size: 1.3rem;
-    }
+    line-height: 1.5;
+    font-size: 1.125rem;
+    font-weight: 400;
 }
 
 a{

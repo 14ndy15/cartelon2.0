@@ -33,10 +33,15 @@ class LoadNews{
         let newsImageSrcSet = makeSrcSet(newsImage, newsMaxWidthImage);
         let newsLink = '/show-news/'+newsId+'/'+encodeURI(newsTitle)+'#'+encodeURI(newsTitle);
 
+        let newsLinkShare = location.protocol + "//" + location.host+newsLink;
+        newsLinkShare = encodeURI(newsLinkShare);
+        newsLinkShare = 'https://www.facebook.com/sharer/sharer.php?u='+newsLinkShare+';src=sdkpreparse';
+
         news.querySelector('.info-block > div').setAttribute('id', encodeURI(newsTitle));
         news.querySelector('.news__image img').setAttribute('src', newsImage+"-20.jpg");
         news.querySelector('.news__image img').setAttribute('data-srcset', newsImageSrcSet);
         news.querySelector('.news__text .info-block__description > a').setAttribute('href', newsLink);
+        news.querySelector('.news__text .info-block__description .info-block__description__share > a').setAttribute('href', newsLinkShare);
         news.querySelector('.news__text h3').textContent = newsTitle;
         news.querySelector('.news__text h4').textContent = newsDate;
         news.querySelector('.news__text p').innerHTML = newsText;

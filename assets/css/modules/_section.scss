@@ -1,13 +1,10 @@
 .section{
-    padding: $paddingVertical 0;
+    padding: 1.5em 0;
 
     &__container{
         margin-bottom: 3em;
     }
 
-    @include atLarge {
-        padding: 3.25rem 0;
-      }
       
     &__title{
         text-align: center;
@@ -19,6 +16,5 @@
     &--light-dark{
         background-color: $mainLightDark;
         color: #fff;
-        
     }
 }

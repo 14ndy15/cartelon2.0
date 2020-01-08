@@ -1,6 +1,6 @@
 {
-  "build/0.0ab6a8ee.js": "/build/0.0ab6a8ee.js",
-  "build/app.css": "/build/app.1c51b272.css",
-  "build/app.js": "/build/app.172cea1a.js",
-  "build/runtime.js": "/build/runtime.000c7cf2.js"
+  "build/app.css": "/build/app.css",
+  "build/app.js": "/build/app.js",
+  "build/runtime.js": "/build/runtime.js",
+  "build/vendors~app.js": "/build/vendors~app.js"
 }

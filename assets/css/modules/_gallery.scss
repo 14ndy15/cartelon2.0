@@ -31,15 +31,23 @@
         background-image: url("/images/icons/arrow.svg");
 
         &--prev{
-            left: .5em;
+            left: 1em;
             right: auto;
             transform: translateY(-50%) rotate(180deg);
+
+            @include atLarge{
+                left: 2em;
+            }
         }
 
         &--next{
-            right: .5em;
+            right: 1em;
             left: auto;
             transform: translateY(-50%) rotate(0deg);
+
+            @include atLarge{
+                right: 2em;
+            }
         }
     }
 

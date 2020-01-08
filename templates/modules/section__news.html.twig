@@ -43,7 +43,7 @@
                                     <div class="info-block__description__share">
                                         {% set absolute_url = absolute_url(url) %}
                                         {% set facebook_url = 'https://www.facebook.com/sharer/sharer.php?u='~absolute_url~'#'~(new.title | url_encode)~';src=sdkpreparse' %}
-                                        <a target="_blank" href="{{ facebook_url }}" class="fb-xfbml-parse-ignore">
+                                        <a target="_blank" rel="noopener" href="{{ facebook_url }}" class="fb-xfbml-parse-ignore">
                                             <img src="{{ asset('images/icons/facebook_blue.svg') }}" alt="facebook logo">
                                             Compartir en Facebook
                                         </a>
