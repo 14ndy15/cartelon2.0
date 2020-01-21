@@ -21,7 +21,7 @@ class LoadEvents{
         this.currentIndex = -1;
         this.amountToFetch = 2;
 
-        this.urlToFetch = this.currentIndex < 0 ?  '/events/'+this.amountToFetch : '/events/'+(this.currentIndex)+'/'+this.amountToFetch;
+        this.urlToFetch = () => this.currentIndex < 0 ?  '/events/'+this.amountToFetch : '/events/'+(this.currentIndex)+'/'+this.amountToFetch;
 
         this.event();
     }
@@ -73,8 +73,6 @@ class LoadEvents{
             carousel.appendChild(carouselCellClone);
         }
 
-        console.log(carouselCell);
-
         return gridEventExpand;
     }
 
@@ -121,7 +119,7 @@ class LoadEvents{
     getData() {
 
         let that = this;
-        axios.get(this.urlToFetch)
+        axios.get(this.urlToFetch())
             .then(function (response) {
                 let data = response.data;
 

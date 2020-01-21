@@ -13,7 +13,7 @@ class LoadVideos{
 
         this.currentIndex = -1;
         this.amountToFetch = 2;
-        this.urlToFetch = this.currentIndex < 0 ? '/videos/'+this.amountToFetch : '/videos/'+(this.currentIndex)+'/'+this.amountToFetch;
+        this.urlToFetch = () => this.currentIndex < 0 ? '/videos/'+this.amountToFetch : '/videos/'+(this.currentIndex)+'/'+this.amountToFetch;
 
         this.event();
     }
@@ -35,29 +35,29 @@ class LoadVideos{
     }
 
     showOrHideSpinner(){
-        this.spinnerWrapper.toggleClass('load__animation__wrapper--is-visible');
+        this.spinnerWrapper.classList.toggle('load__animation__wrapper--is-visible');
     }
 
     getData() {
         let that = this;
-        axios.get(this.urlToFetch)
+        axios.get(this.urlToFetch())
             .then(function (response) {
                 let data = response.data;
 
                 if (data.length > 0)
                 {
                     if (data.length < that.amountToFetch)
-                        that.buttonMoreVideosWrapper.hide();
+                        that.buttonMoreVideosWrapper.classList.add('wrapper--hide');
 
                     Object.keys(data).forEach(function(key) {
                         let videoUrl = data[key].url;
                         let videoMore = data[key].more;
 
                         let video = that.createVideo(videoUrl);
-                        that.parent[0].appendChild(video);
+                        that.parent.appendChild(video);
 
                         if(!videoMore)
-                            that.buttonMoreVideosWrapper.hide();
+                            that.buttonMoreVideosWrapper.classList.add('wrapper--hide');
                     });
 
                     that.currentIndex = data[data.length - 1].currentIndex;
@@ -65,7 +65,7 @@ class LoadVideos{
 
                 }
                 else{
-                    that.buttonMoreVideosWrapper.hide();
+                    that.buttonMoreVideosWrapper.classList.add('wrapper--hide');
                 }
 
                 that.showOrHideSpinner();

@@ -21,7 +21,7 @@ class LoadPosters{
 
         this.currentIndex = -1;
         this.amountToFetch = 2;
-        this.fetchMorePoster = this.currentIndex < 0 ? '/posters/'+this.amountToFetch : '/posters/'+(this.currentIndex)+'/'+this.amountToFetch;
+        this.fetchMorePoster = () => this.currentIndex < 0 ? '/posters/'+this.amountToFetch : '/posters/'+(this.currentIndex)+'/'+this.amountToFetch;
 
         this.amountOfExistingPosters = document.querySelectorAll('.poster a[data-poster-big]').length;
 
@@ -157,9 +157,8 @@ class LoadPosters{
 
     getMorePosterEvents(e) {
         e.preventDefault();
-
         let that = this;
-        axios.get(this.fetchMorePoster)
+        axios.get(this.fetchMorePoster())
         .then(function (response) {
             let postersEvents = response.data;
             

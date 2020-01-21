@@ -11,7 +11,7 @@ class LoadNews{
 
         this.currentIndex = -1;
         this.amountToFetch = 2;
-        this.urlToFetch =  this.currentIndex < 0 ? '/news/'+this.amountToFetch : '/news/'+this.currentIndex+'/'+this.amountToFetch;
+        this.urlToFetch = () => this.currentIndex < 0 ? '/news/'+this.amountToFetch : '/news/'+this.currentIndex+'/'+this.amountToFetch;
 
         this.events();
     }
@@ -37,6 +37,7 @@ class LoadNews{
         newsLinkShare = encodeURI(newsLinkShare);
         newsLinkShare = 'https://www.facebook.com/sharer/sharer.php?u='+newsLinkShare+';src=sdkpreparse';
 
+        console.log(news);
         news.querySelector('.info-block > div').setAttribute('id', encodeURI(newsTitle));
         news.querySelector('.news__image img').setAttribute('src', newsImage+"-20.jpg");
         news.querySelector('.news__image img').setAttribute('data-srcset', newsImageSrcSet);
@@ -58,7 +59,7 @@ class LoadNews{
         e.preventDefault();
 
         let that = this;
-        axios.get(this.urlToFetch)
+        axios.get(this.urlToFetch())
         .then(function (response) {
             let data = response.data;
             
