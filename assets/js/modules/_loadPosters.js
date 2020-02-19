@@ -55,9 +55,13 @@ class LoadPosters{
     createPoster(posterEventData, posterData, posterBigIndex){
 
         let poster = this.posterPrototype.cloneNode(true);
+        let posterItemOverflow = poster.querySelector('.poster__item__overflow');
         let posterLink = poster.querySelector('a');
         let posterImage = poster.querySelector('img');
         let posterAuthor = poster.querySelector('.poster__item__author');
+
+        if (posterData.soldOut)
+            posterItemOverflow.classList.add('poster__item__overflow--soldOut');
 
         let posterImageSrcSet = makeSrcSet(posterData.image, posterData.maxWidth);
         let url = '#'+posterData.id+'-'+encodeURI(posterEventData.name)+'-'+encodeURI(posterData.author);

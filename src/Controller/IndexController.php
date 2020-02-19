@@ -230,6 +230,7 @@ class IndexController extends AbstractController
                     'imageDetail1MaxWidth' => $poster->getOriginalImageWidthImageDetails1(),
                     'imageDetail2' => $poster->getWebPathImageDetail2(null),
                     'imageDetail2MaxWidth' => $poster->getOriginalImageWidthImageDetails2(),
+                    'soldOut' => $poster->getSoldOut(),
                 ));
             }
             array_push($data, array(
@@ -266,6 +267,7 @@ class IndexController extends AbstractController
             'imageDetail1MaxWidth' => $poster->getConstraintWideDimensionsImageDetails1()[count($poster->getConstraintWideDimensionsImageDetails1()) - 1],
             'imageDetail2' => $poster->getWebPathImageDetail2(null) == null ? '/' : '/'.$poster->getWebPathImageDetail2(null),
             'imageDetail2MaxWidth' => $poster->getConstraintWideDimensionsImageDetails2()[count($poster->getConstraintWideDimensionsImageDetails2()) - 1],
+            'soldOut' => $poster->getSoldOut(),
         );
 
         return $this->json($data);

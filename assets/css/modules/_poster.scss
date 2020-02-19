@@ -77,13 +77,18 @@
                     top: 0;
                     left: 0;
                     z-index: 1;
-                    padding: .5em 4em;
+                    padding: .5em 2em;
                     background-color: $mainBlue;
                     color: white;
                     text-transform: uppercase;
                     transform-origin: 50% 50%;
-                    transform: rotate(-45deg) translateY(-25%) translateX(-30%);
+                    transform: rotate(-45deg) translateY(-30%) translateX(-25%);
                     font-weight: 700;
+
+                    @include atLarge{
+                        padding: .5em 4em;
+                        transform: rotate(-45deg) translateY(-25%) translateX(-30%);
+                    }
                 }
             }
         }
