@@ -216,6 +216,11 @@ class Poster extends ImageField
     private $filenames_ImageDetail1;
     private $filenames_ImageDetail2;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $soldOut;
+
     public function loadData_ImageDetail1()
     {
         /*This array need to be sortes ascendent*/
@@ -623,6 +628,18 @@ class Poster extends ImageField
     public function updateThumbsImageDetail2(){
         $this->removeThumbs_ImageDetail2();
         $this->createThumb_ImageDetail2();
+    }
+
+    public function getSoldOut(): bool
+    {
+        return $this->soldOut == null ? false : $this->soldOut;
+    }
+
+    public function setSoldOut(?bool $soldOut): self
+    {
+        $this->soldOut = $soldOut;
+
+        return $this;
     }
 
 }

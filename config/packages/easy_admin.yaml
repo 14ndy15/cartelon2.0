@@ -45,17 +45,19 @@ easy_admin:
                    - { property: 'position', label: 'Orden de aparicion', help: 'Si existe una jerarquía (premio / lugares) entre los carteles que participaron en el concurso, con este valor se define el orden de aparición. <br> <b>Números menores van primero </b>.'}
                    - { property: 'date', label: 'Fecha de creación', help: 'Solo se muestra el año'}
                    - { property: 'description', label: 'Descripción', help: 'Este campo no es obligatorio, de existir se muestra en la vista ampliada del cartel.'}
+                   - { property: 'soldOut', label: 'Agotado?', help: 'Este campo no es obligatorio, Muestra una banda de agotado en la vista del cartel mostrando que esta agotado.'}
            list:
                title: 'Carteles'
                fields:
-                   - { property: 'searchableText', label: 'texto'}
+#                   - { property: 'searchableText', label: 'Texto'}
                    - { property: 'author', label: 'Autor'}
                    - { property: 'getWebPath', label: 'Imagen',  type: 'image'}
-                   - { property: 'getWebPathImageDetail1', label: 'Imagen (detalle 1)',  type: 'image'}
-                   - { property: 'getWebPathImageDetail2', label: 'Imagen (detalle 2)',  type: 'image'}
+                   - { property: 'getWebPathImageDetail1', label: 'Imagen (1)',  type: 'image'}
+                   - { property: 'getWebPathImageDetail2', label: 'Imagen (2)',  type: 'image'}
                    - { property: 'associateEvent', label: 'Proyecto'}
+                   - { property: 'soldOut', label: 'Agotado'}
                    - { property: 'date', label: 'Fecha de creación'}
-                   - { property: 'position', label: 'Orden de aparicion'}
+                   - { property: 'position', label: 'Orden'}
         News:
              class: App\Entity\News
              label: 'Noticia'
