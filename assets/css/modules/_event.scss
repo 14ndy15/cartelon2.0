@@ -95,6 +95,11 @@
 
         &__carousel{
             overflow: hidden;
+            margin: auto;
+
+            @include atLarge{
+                width: 85%;
+            }
         }
 
         &__image{            
@@ -103,7 +108,7 @@
             object-fit: cover;
 
             @include atLarge{
-                height: 90vh;
+                height: 75vh;
             }
         }
 
