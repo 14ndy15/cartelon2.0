@@ -66,6 +66,26 @@
             @include atSmall {
                 box-shadow:  0 0 .7em $mainGrey !important;
             }
+
+            &--soldOut{
+                position: relative;
+
+
+                &:before {
+                    content: 'Agotado';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 1;
+                    padding: .5em 4em;
+                    background-color: $mainBlue;
+                    color: white;
+                    text-transform: uppercase;
+                    transform-origin: 50% 50%;
+                    transform: rotate(-45deg) translateY(-25%) translateX(-30%);
+                    font-weight: 700;
+                }
+            }
         }
     
         &__author{
