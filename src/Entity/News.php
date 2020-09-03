@@ -152,7 +152,7 @@ class News extends ImageField
         if ($this->pathFile === null)
             return null;
 
-        $prefixPath = 'uploads/files/';
+        $prefixPath = '/uploads/files/';
         $path = $prefixPath.$this->pathFile;
 
         return $path;
