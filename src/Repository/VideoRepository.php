@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * @method Video|null find($id, $lockMode = null, $lockVersion = null)
