@@ -115,13 +115,14 @@ abstract class ImageField
     }
 
     public function getOriginalImageWidth(){
-        $data = getimagesize($this->getAbsolutePath());
-        $width = $data[0];
+        $data = self::getimagesizeOverride($this->getAbsolutePath());
+        $width = $data[0];            
         return $width;
     }
 
     public function getOriginalSizes(){
-        return getimagesize($this->getAbsolutePath());
+        $values = self::getimagesizeOverride($this->getAbsolutePath());
+        return $values;
     }
 
     protected function getUploadRootDir()
@@ -257,4 +258,20 @@ abstract class ImageField
         $this->removeThumbs();
         $this->createThumb();
     }
+
+    static public function getimagesizeOverride($filepath){
+
+        try{
+            $values = getimagesize($filepath);
+        }
+        catch(\ErrorException $e){
+            $values = [
+                0 => 1200,
+                1 => 800
+            ];
+        }
+        return $values;
+    }
+
+    
 }
