@@ -45,6 +45,9 @@
 |____________________________|
 
 <?php echo $output; ?>
+
+<?php echo phpversion(); ?>
+
 </pre>
 </body>
 </html>
