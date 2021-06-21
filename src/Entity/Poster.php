@@ -344,8 +344,8 @@ class Poster extends ImageField
     public function getOriginalImageWidthImageDetails1(){
         if ($this->getAbsolutePath_ImageDetail1() == null)
             return 0;
-
-        $data = getimagesize($this->getAbsolutePath_ImageDetail1());
+        
+        $data = ImageField::getimagesizeOverride($this->getAbsolutePath_ImageDetail1());
         $width = $data[0];
         return $width;
     }
@@ -354,7 +354,7 @@ class Poster extends ImageField
         if ($this->getAbsolutePath_ImageDetail2() == null)
             return 0;
 
-        $data = getimagesize($this->getAbsolutePath_ImageDetail2());
+        $data = ImageField::getimagesizeOverride($this->getAbsolutePath_ImageDetail2());
         $width = $data[0];
         return $width;
     }
