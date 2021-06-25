@@ -1,0 +1,21 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+Votos de usuarios en los Posters
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        {% for poster in postersVote %}
+            <div class="col-md-3" style="padding: 2rem">
+                <img src="{{ asset(poster.image) }}" class="w-11/12" style="max-height: 30vh; max-width: 30vw">
+                <p class="text-center">{{ poster.author }}</p>
+                <p class="text-center text-bold">{{ poster.event }}</p>
+                <p class="text-center text-bold">{{ poster.votes }} votos</p>
+            </div>
+        {% else %}
+            Sin votos por el momento. :(
+        {% endfor %}
+    </div>
+
+{% endblock %}

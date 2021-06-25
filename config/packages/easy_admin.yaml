@@ -198,3 +198,7 @@ easy_admin:
                     - { property: 'address', label: 'Dirección'}
                     - { property: 'phone', label: 'Teléfono'}
                     - { property: 'email', label: 'Correo'}
+        UserVote:
+            class: App\Entity\UserVote
+            controller: App\Controller\VotingAdminController
+            label: 'Votos en Posters'
