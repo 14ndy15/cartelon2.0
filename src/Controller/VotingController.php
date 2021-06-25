@@ -33,7 +33,9 @@ class VotingController extends AbstractController
         $ifModifiedSince = $request->headers->get("If-Modified-Since") ?? $request->headers->get("if-modified-since") ?? $request->headers->get("IF-MODIFIED-SINCE");
 
         if( UserVote::validateSession($sid) ) {
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
 
             if($_COOKIE['sid'] !== $sid)
                 setcookie('sid', $sid, time()+31536000);
