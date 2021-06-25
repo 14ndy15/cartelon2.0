@@ -15,8 +15,8 @@
                         relacionadas con el mundo del cartel.
                     </p>
 
-                    <form class="footer__subscription__form" action="http://cartelon.test/mail" method="POST">
-                        <input class="footer__subscription__form__item footer__subscription__form__item__email" type="email" placeholder="Su correo" required>
+                    <form class="footer__subscription__form" action="{{ path('mail') }}" method="POST">
+                        <input class="footer__subscription__form__item footer__subscription__form__item__email" name="email" type="email" placeholder="Su correo" required>
                         <input class="footer__subscription__form__item footer__subscription__form__item__submit" type="submit" value="Suscribirse">
                     </form>
 

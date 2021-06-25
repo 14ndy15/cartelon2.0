@@ -377,6 +377,7 @@ class IndexController extends AbstractController
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL))
         {
+            //TODO: use Mailer
             mail('carteloncuba@gmail.com',
                 'Nuevo subscriptor',
                 'Hola!, Tienes un nuevo subscriptor su correo es '.$email);
