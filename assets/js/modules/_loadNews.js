@@ -37,7 +37,6 @@ class LoadNews{
         newsLinkShare = encodeURI(newsLinkShare);
         newsLinkShare = 'https://www.facebook.com/sharer/sharer.php?u='+newsLinkShare+';src=sdkpreparse';
 
-        console.log(news);
         news.querySelector('.info-block > div').setAttribute('id', encodeURI(newsTitle));
         news.querySelector('.news__image img').setAttribute('src', newsImage+"-20.jpg");
         news.querySelector('.news__image img').setAttribute('data-srcset', newsImageSrcSet);

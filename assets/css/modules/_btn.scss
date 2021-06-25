@@ -75,6 +75,59 @@
         }
     }
 
+.heartbeat {
+    animation: heartbeat 1.5s ease-in-out infinite both;
+}
+@keyframes heartbeat {
+    from {
+        transform: scale(1);
+        transform-origin: center center;
+        animation-timing-function: ease-out;
+    }
+    10% {
+        transform: scale(0.91);
+        animation-timing-function: ease-in;
+    }
+    17% {
+        transform: scale(0.98);
+        animation-timing-function: ease-out;
+    }
+    33% {
+        transform: scale(0.87);
+        animation-timing-function: ease-in;
+    }
+    45% {
+        transform: scale(1);
+        animation-timing-function: ease-out;
+    }
+}
+
+.btn__like{
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    background-color: $mainBlue;
+    z-index: 1;
+    cursor: pointer;
+
+    @include atSmall {
+        width: 3em;
+        height: 3em;
+        bottom: 2.5em;
+        right: 2.5em;
+    }
+    &:hover{
+        animation: heartbeat 1.5s ease-in-out infinite both;
+    }
+    &.liked{
+        background-color: #1b9448;
+    }
+}
+
+
 .btn__prev{
     border-radius: 50%;
     width: 2em;

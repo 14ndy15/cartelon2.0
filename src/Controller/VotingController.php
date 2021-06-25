@@ -24,12 +24,12 @@ class VotingController extends AbstractController
 
     /**
      * @Route("/voting/track", name="voting_track")
-     * @Cache(expires="today + 3 year", maxage=31536000)
+     * @Cache(expires="today + 1 year", maxage=31536000)
      */
     public function track(Request $request, UserVoteRepository $repository): Response
     {
 
-        $sid = $request->headers->get("If-None-Match") ?? $request->headers->get("if-none-match") ?? $request->headers->get("IF-NONE-MATCH") ?: "";
+        $sid = $request->headers->get("If-None-Match") ?? $request->headers->get("if-none-match") ?? $request->headers->get("IF-NONE-MATCH") ?? $_COOKIE['sid'] ?? "";
         $ifModifiedSince = $request->headers->get("If-Modified-Since") ?? $request->headers->get("if-modified-since") ?? $request->headers->get("IF-MODIFIED-SINCE");
 
         if( UserVote::validateSession($sid) ) {
@@ -39,16 +39,19 @@ class VotingController extends AbstractController
         } else if( $ifModifiedSince ) {
             return new Response(null, 304);
         } else {
-            session_start();
             $sessionID = UserVote::generateUUID();
             $_SESSION['sid'] = $sessionID;
+            $expires = gmdate("M d Y H:i:s",  mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1));
+            $cookieStr = "sid=$sessionID;max-age=31536000;expires=$expires GMT;samesite=strict;secure=false";
 
             $response = new Response(
+                //
 <<<SCRIPT
 var now = new Date();
-var window.__sid = $sessionID; // Server generated
 
-setCookie("sid", window.__sid, now.setFullYear(now.getFullYear() + 1, now.getMonth(), now.getDate() - 1));
+window.__sid = "$sessionID"; // Server generated
+
+document.cookie = "$cookieStr"  ;
 
 if( "localStorage" in window ) {
   window.localStorage.setItem("sid", window.__sid);
@@ -60,8 +63,9 @@ SCRIPT);
             $response->setMaxAge(31536000);
             $response->setLastModified(new \DateTime('today - 6 months'));
             $response->setEtag($sessionID);
-            $response->setExpires(new \DateTime('today + 3 year'));
+            $response->setExpires(new \DateTime('today + 1 year'));
             $response->headers->addCacheControlDirective('must-revalidate', true);
+            $response->headers->set('Content-Type', 'application/javascript; charset=utf-8');
             return $response;
         }
 
@@ -73,11 +77,21 @@ SCRIPT);
     }
 
     /**
-     * @Route("/voting/poster/{id]", name="voting_poster")
+     * @Route("/voting/poster/{poster}", name="voting_poster")
      */
-    public function votingPoster(Poster $poster, Request $request): Response
+    public function votingPoster(Poster $poster, Request $request, UserVoteRepository $repository): Response
     {
-        return $this->json(['id' => null, 'poster' => null, 'event' => null ]);
+        $sid = $_SESSION['sid'] ?? UserVote::generateUUID();
+        $newVote = new UserVote($sid);
+        $existentVote = $repository->findBy(['userId' => $sid, 'poster' => $poster]);
+
+        if(!$existentVote)
+        {
+            $newVote->setPoster($poster);
+            $this->getDoctrine()->getManager()->persist($newVote);
+            $this->getDoctrine()->getManager()->flush();
+        }
+        return $this->json(['id' => $newVote->getId(), 'poster' => $poster->getId()]);
     }
 
     /**

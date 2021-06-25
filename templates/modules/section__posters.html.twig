@@ -68,7 +68,11 @@
                                    data-poster-title="{{ posterEvent.name }}"
                                    data-poster-author="{{ poster.author }}"
                                    data-poster-year="{{ poster.date == '' ? '' : poster.date  | date('Y') }}"
-                                   data-poster-description="{{ poster.description | nl2br }}">
+                                   data-poster-description="{{ poster.description | nl2br }}"
+                                {% if poster.id in currentUserVotes %}
+                                    data-poster-liked="true"
+                               {% endif %}
+                                >
 
                                 <img
                                     class="lazyload blur-up"

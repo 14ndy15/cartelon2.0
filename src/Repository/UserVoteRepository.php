@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\UserVote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,31 @@ class UserVoteRepository extends ServiceEntityRepository
         parent::__construct($registry, UserVote::class);
     }
 
+    public function findPostersArrayByUser($userId)
+    {
+        $result = $this->createQueryBuilder('u')
+            ->andWhere('u.userId = :val')
+            ->setParameter('val', $userId)
+            ->orderBy('u.id', 'ASC')
+            ->addGroupBy('u')
+//            ->setMaxResults(10)
+
+            ->getQuery()->setHydrationMode(AbstractQuery::HYDRATE_ARRAY)
+            ->getResult()
+        ;
+
+        $posters = [];
+        foreach ($result as $vote)
+        {
+            /**
+             * @var  UserVote $vote
+             */
+            $posters[] = $vote->getPoster()->getId();
+        }
+        return $posters;
+
+
+    }
     // /**
     //  * @return UserVote[] Returns an array of UserVote objects
     //  */

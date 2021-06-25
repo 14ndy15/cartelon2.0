@@ -83,6 +83,7 @@ class LoadPosters{
         posterImage.setAttribute('src', posterData.image+"-20.jpg");
         posterImage.setAttribute('data-srcset', posterImageSrcSet);
 
+        posterImage.parentElement.dataset.posterLiked = posterData.liked;
         posterAuthor.textContent = posterData.author;
 
         return poster;

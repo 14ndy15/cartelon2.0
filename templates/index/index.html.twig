@@ -29,7 +29,7 @@
 
     {% include 'modules/section__news.html.twig' with {'news': news, 'moreNews': moreNews} only %}
 
-    {% include 'modules/section__posters.html.twig' with {'posterEvents' : posterEvents, 'projectInfo': projectInfo, 'morePosterEvents': morePosterEvents } only %}
+    {% include 'modules/section__posters.html.twig' with {'posterEvents' : posterEvents, 'projectInfo': projectInfo, 'morePosterEvents': morePosterEvents, 'currentUserVotes':currentUserVotes } only %}
 
     {% include 'modules/section__events.html.twig' with {'events' : events, 'moreEvent':moreEvent} only%}
 
@@ -37,7 +37,7 @@
 
     {% include 'modules/section__sites.html.twig' %}
 
-    {% include 'modules/footer.html.twig' with {'date' : date, 'projectInfo': projectInfo} only %}
+    {% include 'modules/footer.html.twig' with {'projectInfo': projectInfo} only %}
 
     {% include 'modules/poster-big.html.twig' %}
 
@@ -45,4 +45,5 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+    <script src="{{ path('voting_track') }}"></script>
 {% endblock %}

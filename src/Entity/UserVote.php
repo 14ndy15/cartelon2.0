@@ -41,8 +41,9 @@ class UserVote
     /**
      * UserVote constructor.
      */
-    public function __construct()
+    public function __construct($userId = null)
     {
+        $this->userId = $userId;
         $this->updatedAt = new \DateTimeImmutable('now');
     }
 
@@ -111,7 +112,7 @@ class UserVote
 
     public static function generateUUID()
     {
-        return md5($_SERVER['HTTP_ACCEPT_LANGUAGE'].$_SERVER['HTTP_USER_AGENT']);
+        return md5($_SERVER['HTTP_ACCEPT_LANGUAGE'].$_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR']);
     }
 
     public static function validateSession($string): bool

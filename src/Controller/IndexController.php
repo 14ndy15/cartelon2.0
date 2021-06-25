@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Poster;
 use App\Entity\ProjectInfo;
 
+use App\Entity\UserVote;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Event;
@@ -120,6 +121,11 @@ class IndexController extends AbstractController
             $dim = $new->getOriginalSizes();
         }
 
+        $currentUserVotes = $this->getDoctrine()->getRepository('App:UserVote')
+            ->findPostersArrayByUser(UserVote::generateUUID());
+
+
+
         return $this->render('index/index.html.twig', [
             'title' => $title,
             'description' => $description,
@@ -138,7 +144,7 @@ class IndexController extends AbstractController
             'videos' => $videos,
             'moreVideos' => $moreVideos,
             'sites' => $sites,
-            'date' => new \DateTime()
+            'currentUserVotes' => $currentUserVotes
         ]);
     }
 
@@ -205,6 +211,9 @@ class IndexController extends AbstractController
             $pos = $amountPosterEvents;
         }
 
+        $currentUserVotes = $this->getDoctrine()->getRepository('App:UserVote')
+            ->findPostersArrayByUser(UserVote::generateUUID());
+
         $posterEvents = $this->getDoctrine()
             ->getRepository(PosterEvent::class)
             ->findByDateFieldPosition($pos, $amount);
@@ -231,6 +240,7 @@ class IndexController extends AbstractController
                     'imageDetail2' => $poster->getWebPathImageDetail2(null),
                     'imageDetail2MaxWidth' => $poster->getOriginalImageWidthImageDetails2(),
                     'soldOut' => $poster->getSoldOut(),
+                    'liked' => (bool)array_filter($currentUserVotes, fn($item) => $item === $poster->getId()),
                 ));
             }
             array_push($data, array(
@@ -256,6 +266,11 @@ class IndexController extends AbstractController
             ->getRepository(Poster::class)
             ->find($posterId);
 
+
+        $currentUserVotes = $this->getDoctrine()->getRepository('App:UserVote')
+            ->findPostersArrayByUser(UserVote::generateUUID());
+
+
         $data = array(
             'author' => $poster->getAuthor(),
             'title' => $poster->getAssociateEvent()->getName(),
@@ -268,6 +283,7 @@ class IndexController extends AbstractController
             'imageDetail2' => $poster->getWebPathImageDetail2(null) == null ? '/' : '/'.$poster->getWebPathImageDetail2(null),
             'imageDetail2MaxWidth' => $poster->getConstraintWideDimensionsImageDetails2()[count($poster->getConstraintWideDimensionsImageDetails2()) - 1],
             'soldOut' => $poster->getSoldOut(),
+            'liked' => (bool)array_filter($currentUserVotes, fn($item) => $item === $poster->getId()),
         );
 
         return $this->json($data);

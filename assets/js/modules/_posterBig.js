@@ -27,6 +27,7 @@ class PosterBig{
 
         this.posterBtnNext = document.querySelector('.poster-big__next');
         this.posterBtnPrev = document.querySelector('.poster-big__prev');
+        this.posterBtnLike = document.querySelector('.poster-big__like');
         this.posterClose = document.querySelector('.poster-big__close');
 
         this.posterId = 0;
@@ -90,6 +91,8 @@ class PosterBig{
 
         this.posterBtnPrev.addEventListener('click', this.prevPosterBig.bind(this));
 
+        this.posterBtnLike.addEventListener('click', this.likePoster.bind(this));
+
         this.posterClose.addEventListener('click', this.closePosterBig.bind(this));
 
         this.posterBigLinkDetails0.addEventListener('click', this.showDetails.bind(this));
@@ -105,6 +108,7 @@ class PosterBig{
         this.posterBtnPrev.classList.remove('hide');
         this.posterBtnNext.classList.remove('hide');
 
+        this.currentTarget = event.currentTarget;
         let posterId = event.currentTarget.getAttribute('data-poster-big');
         this.posterId = parseInt(posterId);
 
@@ -190,7 +194,25 @@ class PosterBig{
             author : element.getAttribute('data-poster-author'),
             year : element.getAttribute('data-poster-year'),
             description : element.getAttribute('data-poster-description'),
+                liked: element.getAttribute('data-poster-liked') || false
         };
+    }
+
+    likePoster()
+    {
+        let poster = this.getDataObject(this.postersTriggers[this.posterId]);
+        let url = '/voting/poster/'+poster.id;
+        let that = this;
+
+        axios.get(url)
+            .then(function (response) {
+                that.posterBtnLike.classList.add('liked');
+                that.currentTarget.dataset.posterLiked = 'true';
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 
     refreshPosterBig(poster = null){
@@ -212,6 +234,10 @@ class PosterBig{
 
         this.posterBigSubtitle.textContent = poster.author + (poster.year === '' ? '' : ' / ' + poster.year);
         this.posterBigDescription.innerHTML = poster.description;
+
+        if(poster.liked === 'true')
+            this.posterBtnLike.classList.add('liked');
+        else this.posterBtnLike.classList.remove('liked');
     }
 
     closePosterBig(e){

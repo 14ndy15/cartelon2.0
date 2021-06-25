@@ -151,11 +151,14 @@
         opacity: 1;
     }
 
-    &__prev, &__next{
+    &__prev, &__next, &__like{
         display: block;
 
         &.hide{
             display: none;
         }
+    }
+    &__like {
+        padding: 5px;
     }
 }
