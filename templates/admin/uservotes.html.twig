@@ -7,7 +7,7 @@ Votos de usuarios en los Posters
 {% block main %}
     <div class="row">
         {% for poster in postersVote %}
-            <div class="col-md-3" style="padding: 2rem">
+            <div class="col-md-3 text-center align-items-center" style="padding: 2rem">
                 <img src="{{ asset(poster.image) }}" class="w-11/12" style="max-height: 30vh; max-width: 30vw">
                 <p class="text-center">{{ poster.author }}</p>
                 <p class="text-center text-bold">{{ poster.event }}</p>

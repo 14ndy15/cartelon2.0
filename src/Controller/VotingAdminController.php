@@ -44,9 +44,6 @@ class VotingAdminController extends EasyAdminController
             }
             return ($a['votes'] > $b['votes']) ? -1 : 1;
         });
-
-        dump($posters);
-
         return $this->render('admin/uservotes.html.twig', ['postersVote' => $posters]);
     }
 }

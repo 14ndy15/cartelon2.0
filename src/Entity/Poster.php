@@ -611,7 +611,7 @@ class Poster extends ImageField
         if($file = $this->getAbsolutePath_ImageDetail2())
         {
             foreach ($this->filenames_ImageDetail2 as $filename) {
-                dump($filename);
+//                dump($filename);
                 @unlink($filename);
             }
 
