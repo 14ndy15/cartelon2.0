@@ -34,6 +34,10 @@ class VotingController extends AbstractController
 
         if( UserVote::validateSession($sid) ) {
             session_start();
+
+            if($_COOKIE['sid'] !== $sid)
+                setcookie('sid', $sid, time()+31536000);
+
             $_SESSION['sid'] = $sid;
             return new Response(null, 304);
         } else if( $ifModifiedSince ) {
@@ -42,7 +46,7 @@ class VotingController extends AbstractController
             $sessionID = UserVote::generateUUID();
             $_SESSION['sid'] = $sessionID;
             $expires = gmdate("M d Y H:i:s",  mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1));
-            $cookieStr = "sid=$sessionID;max-age=31536000;expires=$expires GMT;samesite=strict;secure=false";
+            $cookieStr = "sid=$sessionID;max-age=31536000;expires=$expires GMT;samesite=strict";
 
             $response = new Response(
                 //
