@@ -105,6 +105,7 @@ class PosterBig{
     openPosterBig(event){
         event.preventDefault();
 
+        document.body.classList.add('modal-open');
         this.posterBtnPrev.classList.remove('hide');
         this.posterBtnNext.classList.remove('hide');
 
@@ -245,6 +246,7 @@ class PosterBig{
 
         this.posterBig.classList.remove('poster-big--is-visible');
         document.querySelector('body').style.overflowY = 'visible';
+        document.body.classList.remove('modal-open');
     }
 
     keyPressHandler(e){
