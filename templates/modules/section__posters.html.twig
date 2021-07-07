@@ -54,7 +54,8 @@
 
                     {% for poster in posterEvent.posters %}
                         {% set alt = poster.author ~' '~ posterEvent.name %}
-                        <div class="row-6 row__medium-4 row__large-3 row__xlarge-2 poster__item">
+                        <div class="row-6 row__medium-4 row__large-3 row__xlarge-2 poster__item"
+                             data-controller="poster" >
                             <div class="poster__item__overflow {% if poster.soldOut  %} poster__item__overflow--soldOut {% endif %} ">
                                 <a href="#{{ poster.getId }}-{{ posterEvent.name | url_encode }}-{{ poster.author | url_encode }}"
                                    data-poster-id="{{ poster.getId }}"

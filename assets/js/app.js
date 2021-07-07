@@ -17,6 +17,11 @@ import LoadVideos from './modules/_loadVideos';
 import MailSubscription from './modules/_mailSubscription';
 
 
+// start the Stimulus application
+import './bootstrap';
+
+
+
 new MobileMenu();
 new StickyHeader();
 new Carousel();
