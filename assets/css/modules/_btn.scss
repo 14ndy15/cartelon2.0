@@ -124,6 +124,15 @@
     }
     &.liked{
         background-color: #1b9448;
+        opacity: 1 !important;
+    }
+    &.poster__like{
+        right: .5rem;
+        bottom: .5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: 2px;
+        opacity: .6;
     }
 }
 

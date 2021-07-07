@@ -1,4 +1,5 @@
 import { Controller } from 'stimulus';
+import axios from "axios";
 
 /*
  * This is an example Stimulus controller!
@@ -11,7 +12,29 @@ import { Controller } from 'stimulus';
  */
 export default class extends Controller {
     connect() {
-        console.log('connect');
-        this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
+        this.posterElement = this.element.querySelector('a[data-poster-id]');
+        this.description = this.element.querySelector('p');
+        this.likeBtn = this.element.querySelector('div.btn__like');
+
+        if(this.posterElement.dataset.posterLiked === "true")
+        {
+            this.likeBtn.classList.add('liked');
+        }
+        // this.description.textContent = 'Poster ID = ' + this.posterElement.dataset.posterId;
+        this.likeBtn.addEventListener('click',this.likePoster.bind(this));
+    }
+
+    likePoster()
+    {
+        let url = '/voting/poster/'+this.posterElement.dataset.posterId;
+        let that = this;
+        axios.get(url)
+            .then(function (response) {
+                that.posterElement.dataset.posterLiked = 'true';
+                that.likeBtn.classList.add('liked');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 }

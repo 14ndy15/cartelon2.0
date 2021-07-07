@@ -209,6 +209,7 @@ class PosterBig{
             .then(function (response) {
                 that.posterBtnLike.classList.add('liked');
                 that.currentTarget.dataset.posterLiked = 'true';
+                that.currentTarget.parentNode.querySelector('div.btn__like').classList.add('liked');
             })
             .catch(function (error) {
                 console.log(error);
