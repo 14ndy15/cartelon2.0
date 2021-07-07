@@ -195,6 +195,9 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/event-dispatcher": {
+        "version": "1.0.0"
+    },
     "psr/link": {
         "version": "1.0.0"
     },
@@ -261,6 +264,9 @@
             "./config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "symfony/amqp-messenger": {
+        "version": "v5.3.2"
+    },
     "symfony/asset": {
         "version": "v4.4.1"
     },
@@ -292,9 +298,6 @@
     "symfony/css-selector": {
         "version": "v4.4.1"
     },
-    "symfony/debug": {
-        "version": "v4.4.1"
-    },
     "symfony/debug-bundle": {
         "version": "4.1",
         "recipe": {
@@ -318,6 +321,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v4.4.1"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.3.2"
     },
     "symfony/dom-crawler": {
         "version": "v4.4.1"
@@ -391,9 +397,6 @@
     "symfony/http-kernel": {
         "version": "v4.4.1"
     },
-    "symfony/inflector": {
-        "version": "v4.4.1"
-    },
     "symfony/intl": {
         "version": "v4.4.1"
     },
@@ -456,6 +459,9 @@
     "symfony/orm-pack": {
         "version": "v1.0.7"
     },
+    "symfony/password-hasher": {
+        "version": "v5.3.3"
+    },
     "symfony/phpunit-bridge": {
         "version": "4.3",
         "recipe": {
@@ -471,6 +477,9 @@
             "./phpunit.xml.dist",
             "./tests/.gitignore"
         ]
+    },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.23.0"
     },
     "symfony/polyfill-intl-icu": {
         "version": "v1.13.1"
@@ -510,6 +519,9 @@
     },
     "symfony/proxy-manager-bridge": {
         "version": "v4.4.25"
+    },
+    "symfony/redis-messenger": {
+        "version": "v5.3.2"
     },
     "symfony/routing": {
         "version": "4.2",
@@ -560,6 +572,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.1"
+    },
+    "symfony/string": {
+        "version": "v5.3.3"
     },
     "symfony/test-pack": {
         "version": "v1.0.6"
