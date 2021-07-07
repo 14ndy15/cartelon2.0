@@ -11,27 +11,23 @@ import axios from "axios";
  * Delete this file or adapt it for your use!
  */
 export default class extends Controller {
-    connect() {
-        this.posterElement = this.element.querySelector('a[data-poster-id]');
-        this.description = this.element.querySelector('p');
-        this.likeBtn = this.element.querySelector('div.btn__like');
 
-        if(this.posterElement.dataset.posterLiked === "true")
+    static targets = [ "poster", "like" ]
+
+    connect() {
+        if(this.posterTarget.dataset.posterLiked === "true")
         {
-            this.likeBtn.classList.add('liked');
+            this.likeTarget.classList.add('liked');
         }
-        // this.description.textContent = 'Poster ID = ' + this.posterElement.dataset.posterId;
-        this.likeBtn.addEventListener('click',this.likePoster.bind(this));
     }
 
-    likePoster()
-    {
-        let url = '/voting/poster/'+this.posterElement.dataset.posterId;
+    like() {
+        let url = '/voting/poster/'+this.posterTarget.dataset.posterId;
         let that = this;
         axios.get(url)
             .then(function (response) {
-                that.posterElement.dataset.posterLiked = 'true';
-                that.likeBtn.classList.add('liked');
+                that.posterTarget.dataset.posterLiked = 'true';
+                that.likeTarget.classList.add('liked');
             })
             .catch(function (error) {
                 console.log(error);
