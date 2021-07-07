@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block preload %}
-    <link rel="preload" href="{{ asset('css/styles.css') }}" as="style">
+{#    <link rel="preload" href="{{ asset('css/styles.css') }}" as="style">#}
     {% if slides | length > 0 %}
         <link rel="preload" href="{{ asset(slides[0].getFileBackgroundWebPath) }}" as="image">
         <link rel="preload" href="{{ asset('images/hero-white.svg') }}" as="image">
