@@ -19,8 +19,6 @@ class LoadNews{
     events(){
         if (this.buttonMoreNews != null)
             this.buttonMoreNews.addEventListener('click', this.getData.bind(this));
-        else
-            print('Im null');
 
     }
 
