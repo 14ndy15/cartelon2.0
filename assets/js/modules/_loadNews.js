@@ -17,7 +17,11 @@ class LoadNews{
     }
 
     events(){
-        this.buttonMoreNews.addEventListener('click', this.getData.bind(this));
+        if (this.buttonMoreNews != null)
+            this.buttonMoreNews.addEventListener('click', this.getData.bind(this));
+        else
+            print('Im null');
+
     }
 
     createNews(newsData){
