@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  *
  */
+#[ORM\HasLifecycleCallbacks]
 class News extends ImageField
 {
     /**
@@ -170,6 +171,8 @@ class News extends ImageField
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
+    #[ORM\PostPersist()]
+    #[ORM\PostUpdate()]
     public function uploadFile()
     {
         if (null === $this->getFileFile()) {

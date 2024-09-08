@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\HasLifecycleCallbacks]
 class Event extends ImageField
 {
     /**

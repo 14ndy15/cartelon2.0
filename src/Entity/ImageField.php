@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Image
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\HasLifecycleCallbacks]
 abstract class ImageField
 {
     private $temp;
@@ -138,6 +139,8 @@ abstract class ImageField
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
+    #[ORM\PostPersist()]
+    #[ORM\PostUpdate()]
     public function upload()
     {
         if (null === $this->getFile()) {
@@ -164,6 +167,8 @@ abstract class ImageField
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function preUpload()
     {
         if (null !== $this->getFile()) {
@@ -176,6 +181,7 @@ abstract class ImageField
     /**
      * @ORM\PostRemove()
      */
+    #[ORM\PostRemove()]
     public function removeUpload()
     {
         if ($file = $this->getAbsolutePath()) {

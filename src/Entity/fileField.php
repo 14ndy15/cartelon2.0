@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * File
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\HasLifecycleCallbacks]
 abstract class FieldField
 {
     private $tempFile;
@@ -79,6 +80,8 @@ abstract class FieldField
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function uploadFile()
     {
         if (null === $this->getFileFile()) {

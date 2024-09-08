@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
+use App\Repository\SlideRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: SlideRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SlideRepository")
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\HasLifecycleCallbacks]
 class Slide extends ImageField
 {
     /**
@@ -138,6 +142,8 @@ class Slide extends ImageField
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function uploadFileBackground()
     {
         if (null === $this->getFileBackground()) {
@@ -165,6 +171,8 @@ class Slide extends ImageField
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function preUploadBackground()
     {
         if (null !== $this->getFileBackground()) {
@@ -177,6 +185,7 @@ class Slide extends ImageField
     /**
      * @ORM\PostRemove()
      */
+    #[ORM\PostRemove()]
     public function removeUploadBackground()
     {
         if ($file = $this->getFileBackgroundAbsolutePath()) {

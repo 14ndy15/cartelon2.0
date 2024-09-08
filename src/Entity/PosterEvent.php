@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\PosterEventRepository")
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\HasLifecycleCallbacks]
 class PosterEvent extends ImageField
 {
     /**

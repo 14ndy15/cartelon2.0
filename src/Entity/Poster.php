@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\PosterRepository")
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\HasLifecycleCallbacks]
 class Poster extends ImageField
 {
     /**
@@ -157,6 +158,10 @@ class Poster extends ImageField
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
+    #[ORM\PostPersist()]
+    #[ORM\PostUpdate()]
     public function buildSearchableText(){
 
         $text = $this->author;
@@ -399,6 +404,8 @@ class Poster extends ImageField
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function uploadFileImageDetail1()
     {
         if (null === $this->getFileImageDetail1()) {
@@ -426,6 +433,8 @@ class Poster extends ImageField
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function uploadFileImageDetail2()
     {
         if (null === $this->getFileImageDetail2()) {
