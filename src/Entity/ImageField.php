@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Image
- * @ORM\HasLifecycleCallbacks
  */
 #[ORM\HasLifecycleCallbacks]
 abstract class ImageField
@@ -22,14 +21,10 @@ abstract class ImageField
      * @ORM\GeneratedValue(strategy="AUTO")
      */
 
-    /**
-     * @ORM\Column(type="string", length=255, )
-     */
+    #[ORM\Column(type: "string", length: 255)]
     public $path;
 
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
+    #[Assert\File(maxSize: "6000000")]
     private $file;
 
     private $wide_dimensions;
@@ -135,10 +130,6 @@ abstract class ImageField
 
     abstract function getUploadDir();
 
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
     #[ORM\PostPersist()]
     #[ORM\PostUpdate()]
     public function upload()
@@ -163,10 +154,6 @@ abstract class ImageField
         $this->file = null;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
     #[ORM\PrePersist()]
     #[ORM\PreUpdate()]
     public function preUpload()
@@ -178,9 +165,6 @@ abstract class ImageField
         }
     }
 
-    /**
-     * @ORM\PostRemove()
-     */
     #[ORM\PostRemove()]
     public function removeUpload()
     {

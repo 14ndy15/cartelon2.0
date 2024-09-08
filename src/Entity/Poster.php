@@ -2,54 +2,38 @@
 
 namespace App\Entity;
 
+use App\Repository\PosterRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PosterRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: PosterRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Poster extends ImageField
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: "integer")]
     private $id;
 
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: "text", nullable: true)]
     private $description;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $author;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PosterEvent", inversedBy="posters")
-     */
+    #[ORM\ManyToOne(targetEntity: PosterEvent::class, inversedBy: "posters")]
     private $associateEvent;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: "integer", nullable: true)]
     private $position;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: "date", nullable: true)]
     private $date;
 
-    /**
-     * @ORM\Column(type="string", length=300, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 300, nullable: true)]
     private $searchableText;
 
 
@@ -152,12 +136,6 @@ class Poster extends ImageField
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
     #[ORM\PrePersist()]
     #[ORM\PreUpdate()]
     #[ORM\PostPersist()]
@@ -190,40 +168,28 @@ class Poster extends ImageField
     }
 
 
-
-
-
     private $tempImageDetail1;
 
     private $tempImageDetail2;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     public $pathImageDetail1;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+
     public $pathImageDetail2;
 
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
+    #[Assert\File(maxSize: "6000000")]
     private $fileImageDetail1;
 
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
+    #[Assert\File(maxSize: "6000000")]
     private $fileImageDetail2;
 
     private $wideDimensions_ImageDetail;
     private $filenames_ImageDetail1;
     private $filenames_ImageDetail2;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: "boolean", nullable: true)]
     private $soldOut;
 
     public function loadData_ImageDetail1()
@@ -400,12 +366,8 @@ class Poster extends ImageField
     }
 
 
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    #[ORM\PrePersist()]
-    #[ORM\PreUpdate()]
+    #[ORM\PostPersist()]
+    #[ORM\PostUpdate()]
     public function uploadFileImageDetail1()
     {
         if (null === $this->getFileImageDetail1()) {
@@ -429,12 +391,8 @@ class Poster extends ImageField
         $this->fileImageDetail1 = null;
     }
 
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    #[ORM\PrePersist()]
-    #[ORM\PreUpdate()]
+    #[ORM\PostPersist()]
+    #[ORM\PostUpdate()]
     public function uploadFileImageDetail2()
     {
         if (null === $this->getFileImageDetail2()) {
@@ -460,10 +418,8 @@ class Poster extends ImageField
     }
 
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function preUploadImageDetail1()
     {
         if (null !== $this->getFileImageDetail1()) {
@@ -474,10 +430,8 @@ class Poster extends ImageField
 
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function preUploadImageDetail2()
     {
         if (null !== $this->getFileImageDetail2()) {
@@ -487,9 +441,7 @@ class Poster extends ImageField
         }
     }
 
-    /**
-     * @ORM\PostRemove()
-     */
+    #[ORM\PostRemove()]
     public function removeUploadImageDetail1()
     {
         if ($file = $this->getAbsolutePath_ImageDetail1()) {
@@ -498,10 +450,7 @@ class Poster extends ImageField
         }
     }
 
-
-    /**
-     * @ORM\PostRemove()
-     */
+    #[ORM\PostRemove()]
     public function removeUploadImageDetail2()
     {
         if ($file = $this->getAbsolutePath_ImageDetail2()) {
@@ -583,7 +532,7 @@ class Poster extends ImageField
         $width = imagesx($image);
         $height = imagesy($image);
         $original_aspect = $height / $width;
-        for($i = 0; $i<count($this->wideDimensions_ImageDetail); $i++)
+        for($i = 0, $iMax = count($this->wideDimensions_ImageDetail); $i< $iMax; $i++)
         {
             $thumb_width = $this->wideDimensions_ImageDetail[$i];
             $thumb_height = $original_aspect*$thumb_width;
@@ -623,9 +572,6 @@ class Poster extends ImageField
 //                dump($filename);
                 @unlink($filename);
             }
-
-
-
         }
     }
 

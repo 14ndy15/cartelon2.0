@@ -5,38 +5,25 @@ namespace App\Entity;
 use App\Repository\UserVoteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=UserVoteRepository::class)
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: UserVoteRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class UserVote
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $userId;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Poster::class)
-     */
+    #[ORM\ManyToOne(targetEntity: Poster::class)]
     private $poster;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Event::class)
-     */
+    #[ORM\ManyToOne(targetEntity: Event::class)]
     private $event;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
+    #[ORM\Column(type: "datetime_immutable")]
     private $updatedAt;
 
     /**
@@ -102,10 +89,8 @@ class UserVote
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate ()
-     */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function updateTimestamp()
     {
         $this->updatedAt = new \DateTimeImmutable('now');
@@ -113,7 +98,9 @@ class UserVote
 
     public static function generateUUID()
     {
-        return md5($_SERVER['HTTP_ACCEPT_LANGUAGE'].$_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR']);
+        return md5($_SERVER['HTTP_ACCEPT_LANGUAGE']
+            .$_SERVER['HTTP_USER_AGENT']
+            .$_SERVER['REMOTE_ADDR']);
     }
 
     public static function validateSession($string): bool

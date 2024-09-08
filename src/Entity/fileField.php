@@ -14,22 +14,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 abstract class FieldField
 {
     private $tempFile;
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+//    /**
+//     * @var int
+//     *
+//     * @ORM\Column(name="id", type="integer")
+//     * @ORM\Id
+//     * @ORM\GeneratedValue(strategy="AUTO")
+//     */
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+
+    #[ORM\Column(type: "string", length: 255)]
     public $pathFile;
 
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
+    #[Assert\File(maxSize: "6000000")]
     private $fileFile;
 
 
@@ -76,12 +73,8 @@ abstract class FieldField
     }
 
 
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    #[ORM\PrePersist()]
-    #[ORM\PreUpdate()]
+    #[ORM\PostPersist()]
+    #[ORM\PostUpdate()]
     public function uploadFile()
     {
         if (null === $this->getFileFile()) {
@@ -103,10 +96,8 @@ abstract class FieldField
         $this->fileFile = null;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function preUploadFile()
     {
         if (null !== $this->getFileFile()) {
@@ -116,9 +107,7 @@ abstract class FieldField
         }
     }
 
-     /**
-     * @ORM\PostRemove()
-     */
+     #[ORM\PostRemove()]
      public function removeUploadFile()
      {
         if ($file = $this->getFileAbsolutePath()) {

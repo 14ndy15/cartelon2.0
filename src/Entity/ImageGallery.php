@@ -2,35 +2,25 @@
 
 namespace App\Entity;
 
+use App\Repository\ImageGalleryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ImageGalleryRepository")
- * @ORM\HasLifecycleCallbacks
- */
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Entity(repositoryClass: ImageGalleryRepository::class)]
 class ImageGallery extends ImageField
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="imageGalleries")
-     */
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: "imageGalleries")]
     private $associateEvent;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $name;
 
     public function getId(): ?int

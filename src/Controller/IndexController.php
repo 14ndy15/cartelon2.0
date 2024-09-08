@@ -38,11 +38,11 @@ class IndexController extends AbstractController
             ->getRepository(ProjectInfo::class)
             ->findOne();
 
-        $amountSlides = $projectInfo->getAmountSlides();
-        $amountNews = $projectInfo->getAmountNews();
-        $amountPosterEvents = $projectInfo->getAmountPosterEvent();
-        $amountEvents = $projectInfo->getAmountEvents();
-        $amountVideos = $projectInfo->getAmountVideos();
+        $amountSlides = $projectInfo?->getAmountSlides() ?? 0;
+        $amountNews = $projectInfo?->getAmountNews() ?? 0;
+        $amountPosterEvents = $projectInfo?->getAmountPosterEvent() ?? 0;
+        $amountEvents = $projectInfo?->getAmountEvents() ?? 0;
+        $amountVideos = $projectInfo?->getAmountVideos() ?? 0;
 
         if ($amountSlides === null or $amountSlides < 0)
             $amountSlides = $this->amountSlidesDefault;

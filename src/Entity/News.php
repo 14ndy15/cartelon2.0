@@ -2,33 +2,24 @@
 
 namespace App\Entity;
 
+use App\Repository\NewsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
- * @ORM\HasLifecycleCallbacks
- *
- */
+#[ORM\Entity(repositoryClass: NewsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class News extends ImageField
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=500)
-     */
+    #[ORM\Column(type: "string", length: 500)]
     private $title;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: "text")]
     private $text;
 
     public function getDateFormated(){
@@ -51,9 +42,7 @@ class News extends ImageField
         $this->datetime = $datetime;
     }
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: "datetime")]
     private $datetime;
 
     public function __construct()
@@ -97,27 +86,14 @@ class News extends ImageField
 
 
     private $tempFile;
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     public $pathFile;
 
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
+    #[Assert\File(maxSize: "6000000")]
     private $fileFile;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: "integer", nullable: true)]
     private $position;
 
 
@@ -166,11 +142,6 @@ class News extends ImageField
         return  __DIR__ . '/../../public/uploads/files/';
     }
 
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
     #[ORM\PostPersist()]
     #[ORM\PostUpdate()]
     public function uploadFile()
@@ -194,10 +165,8 @@ class News extends ImageField
         $this->fileFile = null;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
     public function preUploadFile()
     {
         if (null !== $this->getFileFile()) {
@@ -207,9 +176,7 @@ class News extends ImageField
         }
     }
 
-    /**
-     * @ORM\PostRemove()
-     */
+    #[ORM\PostRemove()]
     public function removeUploadFile()
     {
         if ($file = $this->getFileAbsolutePath()) {

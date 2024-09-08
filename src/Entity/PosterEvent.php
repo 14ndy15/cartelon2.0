@@ -2,43 +2,32 @@
 
 namespace App\Entity;
 
+use App\Repository\PosterEventRepository;
 use App\Repository\PosterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PosterEventRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: PosterEventRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class PosterEvent extends ImageField
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: "date", nullable: true)]
     private $date;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: "integer", nullable: true)]
     private $position;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Poster", mappedBy="associateEvent")
-     */
+    #[ORM\OneToMany(mappedBy: "associateEvent", targetEntity: Poster::class)]
     private $posters;
 
 
@@ -95,8 +84,8 @@ class PosterEvent extends ImageField
      */
     public function getPosters(): Collection
     {
-        for($i = 0; $i < count($this->posters); $i++){
-            for($j = $i+1; $j < count($this->posters); $j++){
+        for($i = 0, $iMax = count($this->posters); $i < $iMax; $i++){
+            for($j = $i+1, $jMax = count($this->posters); $j < $jMax; $j++){
                 if ($this->posters[$j]->getPosition() < $this->posters[$i]->getPosition()){
                     $temp = $this->posters[$i];
                     $this->posters[$i] = $this->posters[$j];
@@ -134,7 +123,7 @@ class PosterEvent extends ImageField
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName() ?? '';
     }
 
     function getUploadDir()

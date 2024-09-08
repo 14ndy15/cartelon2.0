@@ -9,47 +9,25 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SlideRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SlideRepository")
- * @ORM\HasLifecycleCallbacks
- */
-#[ORM\HasLifecycleCallbacks]
 class Slide extends ImageField
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: "integer", nullable: true)]
     private $position;
 
     private $tempBackground;
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     public $pathBackground;
 
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
+    #[Assert\File(maxSize: "6000000")]
     private $fileBackground;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: "datetime", nullable: true)]
     private $datetime;
 
     public function __construct()
@@ -91,7 +69,7 @@ class Slide extends ImageField
 
         $this->filenamesFileBackground = [];
         foreach ($this->wide_dimensionsFileBackground as $wide)
-            array_push($this->filenamesFileBackground, $this->getFileBackgroundAbsolutePath().'-'.$wide.'.jpg');
+            $this->filenamesFileBackground[] = $this->getFileBackgroundAbsolutePath() . '-' . $wide . '.jpg';
     }
 
     public function setFileBackground(UploadedFile $file = null)
@@ -137,13 +115,8 @@ class Slide extends ImageField
         return  __DIR__ . '/../../public/uploads/images/slides/backgrounds/';
     }
 
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    #[ORM\PrePersist()]
-    #[ORM\PreUpdate()]
+    #[ORM\PostPersist()]
+    #[ORM\PostUpdate()]
     public function uploadFileBackground()
     {
         if (null === $this->getFileBackground()) {
@@ -167,10 +140,6 @@ class Slide extends ImageField
         $this->fileBackground = null;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
     #[ORM\PrePersist()]
     #[ORM\PreUpdate()]
     public function preUploadBackground()
@@ -182,9 +151,6 @@ class Slide extends ImageField
         }
     }
 
-    /**
-     * @ORM\PostRemove()
-     */
     #[ORM\PostRemove()]
     public function removeUploadBackground()
     {
@@ -220,7 +186,7 @@ class Slide extends ImageField
         $width = imagesx($image);
         $height = imagesy($image);
         $original_aspect = $height / $width;
-        for($i = 0; $i<count($this->wide_dimensionsFileBackground); $i++)
+        for($i = 0, $iMax = count($this->wide_dimensionsFileBackground); $i< $iMax; $i++)
         {
             $thumb_width = $this->wide_dimensionsFileBackground[$i];
             $thumb_height = $original_aspect*$thumb_width;

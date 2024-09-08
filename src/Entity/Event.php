@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,48 +12,34 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\HasLifecycleCallbacks
  */
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event extends ImageField
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: "datetime", nullable: true)]
     private $datetime;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $place;
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 500, nullable: true)]
     private $image;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ImageGallery", mappedBy="associateEvent")
-     */
+    #[ORM\OneToMany(targetEntity: ImageGallery::class, mappedBy: "associateEvent")]
     private $imageGalleries;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: "text", nullable: true)]
     private $description;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: "integer", nullable: true)]
     private $position;
 
     public function __construct()
