@@ -34,8 +34,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        return;
-        if (!$event->isMasterRequest() || ($event->getThrowable() instanceof NotFoundHttpException)) {
+        if (!$event->isMainRequest() || ($event->getThrowable() instanceof NotFoundHttpException)) {
             return;
         }
         $message = (new NotificationEmail())
