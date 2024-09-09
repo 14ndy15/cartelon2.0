@@ -152,7 +152,7 @@ class IndexController extends AbstractController
      * @Route("/news/{amount}")
      * @Route("/news/{pos}/{amount}", name="news")
      */
-    public function moreNews($pos = null, $amount){
+    public function moreNews($amount, $pos = null){
 
         if($pos==null) {
             $projectInfo = $this->getDoctrine()
@@ -197,7 +197,7 @@ class IndexController extends AbstractController
      * @Route("/posters/{amount}")
      * @Route("/posters/{pos}/{amount}", name="posters")
      */
-    public function morePosterEvents($pos = null, $amount){
+    public function morePosterEvents($amount, $pos = null){
 
         if($pos==null) {
             $projectInfo = $this->getDoctrine()
@@ -347,7 +347,8 @@ class IndexController extends AbstractController
      * @Route("/videos/{amount}")
      * @Route("/videos/{pos}/{amount}", name="videos")
      */
-    public function moreVideos($pos = null, $amount){
+    public function moreVideos($amount, $pos = null): JsonResponse
+    {
 
         if($pos==null) {
             $projectInfo = $this->getDoctrine()
@@ -386,7 +387,8 @@ class IndexController extends AbstractController
     /**
      * @Route("/mail", name="mail")
      */
-    public function mailSuscription(Request $request){
+    public function mailSuscription(Request $request): JsonResponse
+    {
 
         $email = $request->get('email');
         $response = ['response'=>'error'];
