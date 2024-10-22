@@ -60,20 +60,20 @@ class IndexController extends AbstractController
             $amountVideos = $this->amountVideosDefault;
 
         $slides = $this->getDoctrine()
-                  ->getRepository(Slide::class)
-                  ->orderedByDate($amountSlides);
+          ->getRepository(Slide::class)
+          ->orderedByDate($amountSlides);
 
         $news = $this->getDoctrine()
-                ->getRepository(News::class)
-                ->orderedByDate($amountNews);
+            ->getRepository(News::class)
+            ->findByDateFieldPosition(0, $amountNews);
 
         $moreNews = $this->getDoctrine()
-                    ->getRepository(News::class)
-                    ->count([]) > $amountNews;
+            ->getRepository(News::class)
+            ->count([]) > $amountNews;
 
         $posterEvents = $this->getDoctrine()
-                        ->getRepository(PosterEvent::class)
-                        ->orderByDate($amountPosterEvents);
+            ->getRepository(PosterEvent::class)
+            ->orderByDate($amountPosterEvents);
 
         $morePosterEvents = $this->getDoctrine()
             ->getRepository(PosterEvent::class)
@@ -107,7 +107,7 @@ class IndexController extends AbstractController
         $ogImage = "https://carteloncuba.com/assets/images/hero/Grafica-08.jpg";
         $dim = [1366,768];
 
-        if ($poster != null) {
+        if ($poster !== null) {
             $ogTitle = $poster->getAssociateEvent()->getName().'-'.$poster->getAuthor();
             $ogDescription = $poster->getDescription();
             $ogImage = $poster->getWebPath(null);
