@@ -70,8 +70,8 @@ class NewsRepository extends ServiceEntityRepository
     public function findByDateFieldPosition($position, $amount)
     {
         return $this->createQueryBuilder('n')
-            ->orderBy('n.position', 'DESC')
             ->orderBy('n.datetime', 'DESC')
+            ->addOrderBy('n.position', 'DESC')
             ->setMaxResults($amount)
             ->setFirstResult($position)
             ->getQuery()
