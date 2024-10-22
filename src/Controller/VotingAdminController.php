@@ -27,7 +27,7 @@ class VotingAdminController extends EasyAdminController
                     $posters[$vote->getPoster()->getId()] = [
                     'author' => $vote->getPoster()->getAuthor(),
                     'event' => $vote->getPoster()->getAssociateEvent(),
-                    'image' =>  $vote->getPoster()->getWebPath(200),
+                    'image' =>  $vote->getPoster()->getWebPath(),
                     'votes' => 1
                     ];
                 } else {
