@@ -21,7 +21,6 @@ class VotingAdminController extends EasyAdminController
         $votes = $this->getDoctrine()->getManager()->getRepository('App:UserVote')->findAll();
 
         $posters = [];
-        $orderedPosters = [];
         foreach ($votes as $vote)
         {
             if($vote->getPoster() !== null)
@@ -30,7 +29,7 @@ class VotingAdminController extends EasyAdminController
                 $posters[$vote->getPoster()->getId()] = [
                     'author' => $vote->getPoster()->getAuthor(),
                     'event' => $vote->getPoster()->getAssociateEvent(),
-                    'image' =>  $vote->getPoster()->getWebPath(),
+                    'image' =>  $vote->getPoster()->getWebPath(200),
                     'votes' => 1
                     ];
                 else $posters[$vote->getPoster()->getId()]['votes']++;
