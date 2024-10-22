@@ -31,17 +31,21 @@ abstract class ImageField
 
     private $filenames;
 
-    public function getWideDimensions(){
+    public function getWideDimensions()
+    {
         $this->loadData();
         return $this->wide_dimensions;
     }
 
-    public function getConstraintWideDimensions(){
+    public function getConstraintWideDimensions()
+    {
         $this->loadData();
         $dimensions = array();
-        foreach ($this->wide_dimensions as $dimension)
-            if ($this->getOriginalImageWidth() >= $dimension)
-                array_push($dimensions, $dimension);
+        foreach ($this->wide_dimensions as $dimension) {
+            if ($this->getOriginalImageWidth() >= $dimension) {
+                $dimensions[] = $dimension;
+            }
+        }
 
         return $dimensions;
     }
@@ -51,8 +55,9 @@ abstract class ImageField
         /*This array need to be sortes ascendent*/
         $this->wide_dimensions = [20, 500, 800, 1200, 1900, 3600];
         $this->filenames = [];
-        foreach ($this->wide_dimensions as $wide)
-            array_push($this->filenames, $this->getAbsolutePath().'-'.$wide.'.jpg');
+        foreach ($this->wide_dimensions as $wide) {
+            $this->filenames[] = $this->getAbsolutePath() . '-' . $wide . '.jpg';
+        }
     }
 
 
@@ -89,18 +94,21 @@ abstract class ImageField
         $prefixPath = 'uploads/images/';
         $path = $prefixPath.$this->getUploadDir().'/'.$this->path;
 
-        if ($size == null)
+        if ($size === null) {
             return $path;
+        }
 
         $this->loadData();
 
-        if ($size == null)
+        if ($size === null) {
             return $path;
+        }
 
-        for ($i = 0; count($this->wide_dimensions); $i++)
-            if($this->wide_dimensions[$i]==$size)
+        for ($i = 0; count($this->wide_dimensions); $i++) {
+            if ($this->wide_dimensions[$i]===$size) {
                 return $path.'-'.$size.'.jpg';
-
+            }
+        }
     }
 
     public function getFullImageWebPath()
@@ -110,15 +118,15 @@ abstract class ImageField
             : $this->getUploadDir().'/'.$this->path;
     }
 
-    public function getOriginalImageWidth(){
+    public function getOriginalImageWidth()
+    {
         $data = self::getimagesizeOverride($this->getAbsolutePath());
-        $width = $data[0];            
-        return $width;
+        return $data[0];
     }
 
-    public function getOriginalSizes(){
-        $values = self::getimagesizeOverride($this->getAbsolutePath());
-        return $values;
+    public function getOriginalSizes()
+    {
+        return self::getimagesizeOverride($this->getAbsolutePath());
     }
 
     protected function getUploadRootDir()
@@ -160,7 +168,7 @@ abstract class ImageField
     {
         if (null !== $this->getFile()) {
             // haz lo que quieras para generar un nombre único
-            $filename = substr(sha1(uniqid(mt_rand(), true)),0,10);
+            $filename = substr(sha1(uniqid(mt_rand(), true)), 0, 10);
             $this->path = $filename.'.'.$this->getFile()->guessExtension();
         }
     }
@@ -198,63 +206,70 @@ abstract class ImageField
         return $this->path;
     }
 
-    private function createThumb()
+    private function createThumb(): void
     {
         $this->loadData();
         $image = null;
-        if(strpos($this->getAbsolutePath(),".png"))
+        if (strpos($this->getAbsolutePath(), ".png")) {
             $image = @imagecreatefrompng($this->getAbsolutePath());
-        else
+        } else {
             $image = @imagecreatefromjpeg($this->getAbsolutePath());
+        }
 
         $width = imagesx($image);
         $height = imagesy($image);
         $original_aspect = $height / $width;
-        for($i = 0; $i<count($this->wide_dimensions); $i++)
-        {
+        for ($i = 0, $iMax = count($this->wide_dimensions); $i< $iMax; $i++) {
             $thumb_width = $this->wide_dimensions[$i];
 
-            if ($width < $thumb_width)
+            if ($width < $thumb_width) {
                 continue;
+            }
 
             $thumb_height = $original_aspect*$thumb_width;
 
-            $thumb = imagecreatetruecolor( $thumb_width, $thumb_height );
+            $thumb = imagecreatetruecolor($thumb_width, $thumb_height);
 
-            imagecopyresampled($thumb,
+            imagecopyresampled(
+                $thumb,
                 $image,
-                0, 0,
-                0, 0,
-                $thumb_width, $thumb_height,
-                $width, $height);
+                0,
+                0,
+                0,
+                0,
+                $thumb_width,
+                $thumb_height,
+                $width,
+                $height
+            );
 
             imageinterlace($thumb, true);
             @imagejpeg($thumb, $this->filenames[$i], 85);
-
         }
     }
 
     public function removeThumbs()
     {
         $this->loadData();
-        if($file = $this->getAbsolutePath())
-        {
-            foreach ($this->filenames as $filename)
+        if ($file = $this->getAbsolutePath()) {
+            foreach ($this->filenames as $filename) {
                 @unlink($filename);
+            }
         }
     }
 
-    public function updateThumbs(){
+    public function updateThumbs(): void
+    {
         $this->removeThumbs();
         $this->createThumb();
     }
 
-    static public function getimagesizeOverride($filepath){
+    public static function getimagesizeOverride($filepath)
+    {
 
-        try{
+        try {
             $values = getimagesize($filepath);
-        }
-        catch(\ErrorException $e){
+        } catch (\ErrorException $e) {
             $values = [
                 0 => 1200,
                 1 => 800
@@ -262,6 +277,4 @@ abstract class ImageField
         }
         return $values;
     }
-
-    
 }

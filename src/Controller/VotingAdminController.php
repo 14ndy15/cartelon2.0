@@ -16,29 +16,28 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VotingAdminController extends EasyAdminController
 {
-    protected function listUserVoteAction()
+    protected function listUserVoteAction(): Response
     {
         $votes = $this->getDoctrine()->getManager()->getRepository('App:UserVote')->findAll();
 
         $posters = [];
-        foreach ($votes as $vote)
-        {
-            if($vote->getPoster() !== null)
-            {
-                if(isset($posters[$vote->getPoster()->getId()]) === false)
-                $posters[$vote->getPoster()->getId()] = [
+        foreach ($votes as $vote) {
+            if ($vote->getPoster() !== null) {
+                if (isset($posters[$vote->getPoster()->getId()]) === false) {
+                    $posters[$vote->getPoster()->getId()] = [
                     'author' => $vote->getPoster()->getAuthor(),
                     'event' => $vote->getPoster()->getAssociateEvent(),
                     'image' =>  $vote->getPoster()->getWebPath(200),
                     'votes' => 1
                     ];
-                else $posters[$vote->getPoster()->getId()]['votes']++;
-
+                } else {
+                    $posters[$vote->getPoster()->getId()]['votes']++;
+                }
             }
         }
 
-        usort($posters, function($a, $b ) {
-            if ($a['votes'] == $b['votes']) {
+        usort($posters, static function ($a, $b) {
+            if ($a['votes'] === $b['votes']) {
                 return 0;
             }
             return ($a['votes'] > $b['votes']) ? -1 : 1;

@@ -29,25 +29,31 @@ class VotingController extends AbstractController
     public function track(Request $request, UserVoteRepository $repository): Response
     {
 
-        $sid = $request->headers->get("If-None-Match") ?? $request->headers->get("if-none-match") ?? $request->headers->get("IF-NONE-MATCH") ?? $_COOKIE['sid'] ?? "";
-        $ifModifiedSince = $request->headers->get("If-Modified-Since") ?? $request->headers->get("if-modified-since") ?? $request->headers->get("IF-MODIFIED-SINCE");
+        $sid = $request->headers->get("If-None-Match")
+            ?? $request->headers->get("if-none-match")
+            ?? $request->headers->get("IF-NONE-MATCH")
+            ?? $_COOKIE['sid'] ?? "";
+        $ifModifiedSince = $request->headers->get("If-Modified-Since")
+            ?? $request->headers->get("if-modified-since")
+            ?? $request->headers->get("IF-MODIFIED-SINCE");
 
-        if( UserVote::validateSession($sid) ) {
-            if (session_status() == PHP_SESSION_NONE) {
+        if (UserVote::validateSession($sid)) {
+            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
 
-            if($_COOKIE['sid'] !== $sid)
+            if ($_COOKIE['sid'] !== $sid) {
                 setcookie('sid', $sid, time()+31536000);
+            }
 
             $_SESSION['sid'] = $sid;
             return new Response(null, 304);
-        } else if( $ifModifiedSince ) {
+        } elseif ($ifModifiedSince) {
             return new Response(null, 304);
         } else {
             $sessionID = UserVote::generateUUID();
             $_SESSION['sid'] = $sessionID;
-            $expires = gmdate("M d Y H:i:s",  mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1));
+            $expires = gmdate("M d Y H:i:s", mktime(0, 0, 0, date("m"), date("d"), date("Y")+1));
             $cookieStr = "sid=$sessionID;max-age=31536000;expires=$expires GMT;samesite=strict";
 
             $response = new Response(
@@ -63,7 +69,8 @@ if( "localStorage" in window ) {
   window.localStorage.setItem("sid", window.__sid);
 }
 
-SCRIPT);
+SCRIPT
+            );
             $response->setPublic();
             $response->setSharedMaxAge(31536000);
             $response->setMaxAge(31536000);
@@ -74,12 +81,6 @@ SCRIPT);
             $response->headers->set('Content-Type', 'application/javascript; charset=utf-8');
             return $response;
         }
-
-
-//
-
-
-
     }
 
     /**
@@ -91,8 +92,7 @@ SCRIPT);
         $newVote = new UserVote($sid);
         $existentVote = $repository->findBy(['userId' => $sid, 'poster' => $poster]);
 
-        if(!$existentVote)
-        {
+        if (!$existentVote) {
             $newVote->setPoster($poster);
             $this->getDoctrine()->getManager()->persist($newVote);
             $this->getDoctrine()->getManager()->flush();
