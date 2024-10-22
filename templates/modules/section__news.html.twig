@@ -65,15 +65,19 @@
 
         </div>
 
-        {% if moreNews %}
-            <div id="news__load__wrapper" class="load__animation__wrapper">
+            <div id="news__load__wrapper"
+                 class="load__animation__wrapper"
+                 {% if not moreNews %}style="display: none"{% endif %}
+            >
                 <div class="load__animation__wrapper__element"></div>
             </div>
 
-            <div id="wrapper-loadMoreNews" class="wrapper--center-text">
+            <div id="wrapper-loadMoreNews"
+                 class="wrapper--center-text"
+                 {% if not moreNews %}style="display: none"{% endif %}
+            >
                 <button id="loadMoreNews" class="btn btn--blue-inverse">Ver más noticias</button>
             </div>
-        {% endif %}
 
     </div>
 
