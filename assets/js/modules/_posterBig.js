@@ -31,6 +31,7 @@ class PosterBig{
         this.posterClose = document.querySelector('.poster-big__close');
 
         this.posterId = 0;
+        this.observer = null;
 
         this.events();
         this.checkOpenPosterFromUrl();
@@ -77,15 +78,17 @@ class PosterBig{
     }
 
     events(){
-        this.postersTriggers.forEach(posterTrigger => {
-            posterTrigger.addEventListener('click', this.openPosterBig.bind(this))
-        });
+        const callback = (mutationsList, observer) => {
+            this.eventsPosterTrigger();
+        };
 
-        this.postersInitialContainer.addEventListener('DOMNodeInserted', this.eventsPosterTrigger.bind(this));
-        this.postersSearchContainer.addEventListener('DOMNodeInserted', this.eventsPosterTrigger.bind(this));
-        this.postersInitialContainer.addEventListener('DOMNodeRemoved', this.eventsPosterTrigger.bind(this));
-        this.postersSearchContainer.addEventListener('DOMNodeRemoved', this.eventsPosterTrigger.bind(this));
-
+        this.observer = new MutationObserver(callback.bind(this));
+        const config = {
+            childList: true,
+            subtree: true
+        };
+        this.observer.observe(this.postersInitialContainer, config);
+        this.observer.observe(this.postersSearchContainer, config);
 
         this.posterBtnNext.addEventListener('click', this.nextPosterBig.bind(this));
 
@@ -100,6 +103,8 @@ class PosterBig{
         this.posterBigLinkDetails2.addEventListener('click', this.showDetails.bind(this));
 
         document.addEventListener('keyup', this.keyPressHandler.bind(this));
+
+        this.eventsPosterTrigger();
     }
 
     openPosterBig(event){
