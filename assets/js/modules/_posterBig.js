@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {makeSrcSet} from './_utils';
+import { makeSrcSet } from './_utils';
 
-class PosterBig{
-    constructor(){
+class PosterBig {
+    constructor() {
         this.postersTriggers = document.querySelectorAll('.poster--visible a[data-poster-big]');
 
         this.postersInitialContainer = document.querySelector('.poster__initial');
@@ -37,35 +37,35 @@ class PosterBig{
         this.checkOpenPosterFromUrl();
     }
 
-    checkOpenPosterFromUrl(){
+    checkOpenPosterFromUrl() {
         let documentURL = document.URL;
 
         if (documentURL.indexOf('show-poster/') < 0)
             return;
 
-        let requestUrl = documentURL.substring(documentURL.indexOf('show-poster/')+12);
+        let requestUrl = documentURL.substring(documentURL.indexOf('show-poster/') + 12);
         let posterId = requestUrl.substring(0, requestUrl.indexOf('/'));
         posterId = parseInt(posterId);
 
         if (posterId < 0)
             return;
 
-        let url = '/get_poster/'+posterId;
+        let url = '/get_poster/' + posterId;
         let that = this;
 
         axios.get(url)
-        .then(function (response) {
-            let poster = response.data;
+            .then(function (response) {
+                let poster = response.data;
 
-            that.posterBig.classList.add('poster-big--is-visible');
-            document.querySelector('body').style.overflowY = 'hidden';
+                that.posterBig.classList.add('poster-big--is-visible');
+                document.querySelector('body').style.overflowY = 'hidden';
 
-            that.refreshPosterBig(poster);
+                that.refreshPosterBig(poster);
 
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
     }
 
@@ -77,7 +77,7 @@ class PosterBig{
         });
     }
 
-    events(){
+    events() {
         const callback = (mutationsList, observer) => {
             this.eventsPosterTrigger();
         };
@@ -107,7 +107,7 @@ class PosterBig{
         this.eventsPosterTrigger();
     }
 
-    openPosterBig(event){
+    openPosterBig(event) {
         event.preventDefault();
 
         document.body.classList.add('modal-open');
@@ -122,16 +122,15 @@ class PosterBig{
             this.posterBtnPrev.classList.add('hide');
         if (this.posterId === this.postersTriggers.length - 1)
             this.posterBtnNext.classList.add('hide');
-        
+
         this.posterBig.classList.add('poster-big--is-visible');
         document.querySelector('body').style.overflowY = 'visible';
         this.refreshPosterBig();
     }
 
-    prevPosterBig(){
-        if (this.posterId - 1 >= 0)
-        {
-            this.posterId--;    
+    prevPosterBig() {
+        if (this.posterId - 1 >= 0) {
+            this.posterId--;
             this.posterBtnNext.classList.remove('hide');
             this.refreshPosterBig();
         }
@@ -139,18 +138,17 @@ class PosterBig{
             this.posterBtnPrev.classList.add('hide');
     }
 
-    nextPosterBig(){
-        if (this.posterId + 1 <  this.postersTriggers.length)
-        {
+    nextPosterBig() {
+        if (this.posterId + 1 < this.postersTriggers.length) {
             this.posterId++;
             this.posterBtnPrev.classList.remove('hide');
             this.refreshPosterBig();
         }
-        if (this.posterId ===  this.postersTriggers.length - 1)
+        if (this.posterId === this.postersTriggers.length - 1)
             this.posterBtnNext.classList.add('hide');
     }
 
-    showDetails(event){
+    showDetails(event) {
         event.preventDefault();
 
         let imgDetails = event.currentTarget.getAttribute('data-img');
@@ -159,16 +157,16 @@ class PosterBig{
         this.changeMainImage(imgDetails, imgDetailsPosterMaxWidth);
     }
 
-    changeMainImage(posterImg, posterMaxWidth){
+    changeMainImage(posterImg, posterMaxWidth) {
 
         let srcset = makeSrcSet(posterImg, posterMaxWidth);
         this.posterBigImage.classList.remove('lazyloaded');
         this.posterBigImage.classList.add('lazyload', 'blur-up');
-        this.posterBigImage.setAttribute('src', posterImg+"-20.jpg");
+        this.posterBigImage.setAttribute('src', posterImg + "-20.jpg");
         this.posterBigImage.setAttribute('data-srcset', srcset);
     }
 
-    changeDetailsImage(selectorImage, selectorLink, image, imageMaxWidth){
+    changeDetailsImage(selectorImage, selectorLink, image, imageMaxWidth) {
 
         if (image === '/' || image === 'null') {
             selectorImage.classList.add('poster-big__details__items__image--none');
@@ -187,27 +185,26 @@ class PosterBig{
         selectorLink.setAttribute('data-img-max-width', imageMaxWidth);
     }
 
-    getDataObject(element){
-        return  {
-            id : element.getAttribute('data-poster-id'),
-            title : element.getAttribute('data-poster-title'),
-            maxWidth : element.getAttribute('data-poster-max-width'),
-            image : element.getAttribute('data-poster-img'),
-            imageDetail1MaxWidth : element.getAttribute('data-poster-img-details1-max-width'),
-            imageDetail1 : element.getAttribute('data-poster-img-detail1'),
-            imageDetail2MaxWidth : element.getAttribute('data-poster-img-details2-max-width'),
-            imageDetail2 : element.getAttribute('data-poster-img-detail2'),
-            author : element.getAttribute('data-poster-author'),
-            year : element.getAttribute('data-poster-year'),
-            description : element.getAttribute('data-poster-description'),
-                liked: element.getAttribute('data-poster-liked') || false
+    getDataObject(element) {
+        return {
+            id: element.getAttribute('data-poster-id'),
+            title: element.getAttribute('data-poster-title'),
+            maxWidth: element.getAttribute('data-poster-max-width'),
+            image: element.getAttribute('data-poster-img'),
+            imageDetail1MaxWidth: element.getAttribute('data-poster-img-details1-max-width'),
+            imageDetail1: element.getAttribute('data-poster-img-detail1'),
+            imageDetail2MaxWidth: element.getAttribute('data-poster-img-details2-max-width'),
+            imageDetail2: element.getAttribute('data-poster-img-detail2'),
+            author: element.getAttribute('data-poster-author'),
+            year: element.getAttribute('data-poster-year'),
+            description: element.getAttribute('data-poster-description'),
+            liked: element.getAttribute('data-poster-liked') || false
         };
     }
 
-    likePoster()
-    {
+    likePoster() {
         let poster = this.getDataObject(this.postersTriggers[this.posterId]);
-        let url = '/voting/poster/'+poster.id;
+        let url = '/voting/poster/' + poster.id;
         let that = this;
 
         axios.get(url)
@@ -222,8 +219,8 @@ class PosterBig{
 
     }
 
-    refreshPosterBig(poster = null){
-        if (poster===null)
+    refreshPosterBig(poster = null) {
+        if (poster === null)
             poster = this.getDataObject(this.postersTriggers[this.posterId]);
 
         this.changeMainImage(poster.image, poster.maxWidth);
@@ -234,20 +231,20 @@ class PosterBig{
 
         this.posterBigTitle.textContent = poster.title;
 
-        let url = location.protocol + "//" + location.host+'/show-poster/'+poster.id+'/'+poster.title+'-'+poster.author+'#posters';
+        let url = location.protocol + "//" + location.host + '/show-poster/' + poster.id + '/' + poster.title + '-' + poster.author + '#posters';
         url = encodeURI(url);
-        url = 'https://www.facebook.com/sharer/sharer.php?u='+url+';src=sdkpreparse';
+        url = 'https://www.facebook.com/sharer/sharer.php?u=' + url + ';src=sdkpreparse';
         this.posterBigLinkShare.querySelector('a').setAttribute('href', url);
 
         this.posterBigSubtitle.textContent = poster.author + (poster.year === '' ? '' : ' / ' + poster.year);
         this.posterBigDescription.innerHTML = poster.description;
 
-        if(poster.liked === 'true')
+        if (poster.liked === 'true')
             this.posterBtnLike.classList.add('liked');
         else this.posterBtnLike.classList.remove('liked');
     }
 
-    closePosterBig(e){
+    closePosterBig(e) {
         e.preventDefault();
 
         this.posterBig.classList.remove('poster-big--is-visible');
@@ -255,18 +252,18 @@ class PosterBig{
         document.body.classList.remove('modal-open');
     }
 
-    keyPressHandler(e){
+    keyPressHandler(e) {
         e.preventDefault();
 
         if (e.keyCode === 27) //escape key
             this.closePosterBig();
-            
+
         if (e.keyCode === 39) //arrow right key
             this.nextPosterBig();
-            
+
         if (e.keyCode === 37) //arrow left key
             this.prevPosterBig();
-        
+
     }
 
 }
